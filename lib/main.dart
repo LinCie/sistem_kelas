@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:sistem_kelas/src/pages/home_page.dart';
+import 'package:sistem_kelas/screens/home/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Sistem Kelas',
       themeMode: ThemeMode.light,
       theme: ThemeData(
-        colorScheme: ColorScheme(
+        colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: Color(0xff88c0d0),
           onPrimary: Color(0xffeceff4),
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           onSurface: Color(0xff2e3440),
         ),
       ),
-      home: const HomePage(title: "Sistem Kelas"),
+      home: const HomePage(),
     );
   }
 }
