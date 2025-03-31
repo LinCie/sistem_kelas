@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     return const Scaffold(
       body: Center(
         child: Text(
-          "KelasKita",
+          "Cognito",
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
