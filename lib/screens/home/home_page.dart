@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sistem_kelas/screens/signin/signin_page.dart';
+import 'package:sistem_kelas/shared/storage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,10 +18,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _isSignedIn() async {
-    final prefs = SharedPreferencesAsync();
-    final jwt = await prefs.getString('jwt');
+    final storage = Storage();
 
     await Future.delayed(const Duration(seconds: 3));
+
+    String? jwt = await storage.getToken();
 
     if (mounted) {
       if (jwt == null) {
