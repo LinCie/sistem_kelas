@@ -12,4 +12,13 @@ class AuthService {
     if (response.statusCode != 200) throw Exception(response.data["message"]);
     return response.data;
   }
+
+  Future<String> signIn(String username, String password) async {
+    final response = await dio.post(
+      "/auth/login",
+      data: {"username": username, "password": password},
+    );
+    if (response.statusCode != 200) throw Exception(response.data["message"]);
+    return response.data;
+  }
 }

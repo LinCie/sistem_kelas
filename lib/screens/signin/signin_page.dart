@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sistem_kelas/screens/signup/signup_page.dart';
+import 'package:sistem_kelas/services/auth.dart';
+import 'package:sistem_kelas/shared/storage.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -9,6 +11,35 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _signIn() async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+
+    final authService = AuthService();
+
+    try {
+      final data = await authService.signUp(username, password);
+      final storage = Storage();
+      await storage.saveToken(data);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Registration failed: $e')));
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +55,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               const SizedBox(height: 16),
               TextField(
+                controller: _usernameController,
                 decoration: const InputDecoration(
                   labelText: 'Username',
                   border: OutlineInputBorder(),
@@ -31,6 +63,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               const SizedBox(height: 16),
               TextField(
+                controller: _passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
@@ -38,12 +71,7 @@ class _SignInPageState extends State<SignInPage> {
                 obscureText: true,
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/home');
-                },
-                child: const Text('Sign in'),
-              ),
+              ElevatedButton(onPressed: _signIn, child: const Text('Sign in')),
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
