@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistem_kelas/screens/menu/menu_page.dart';
 
 import 'package:sistem_kelas/screens/signin/signin_page.dart';
 import 'package:sistem_kelas/shared/storage.dart';
@@ -31,7 +32,10 @@ class _HomePageState extends State<HomePage> {
           MaterialPageRoute(builder: (_) => const SignInPage()),
         );
       } else {
-        Navigator.pushReplacementNamed(context, '/dashboard');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const MenuPage()),
+        );
       }
     }
   }

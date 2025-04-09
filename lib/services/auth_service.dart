@@ -9,7 +9,8 @@ class AuthService {
       "/auth/register",
       data: {"username": username, "password": password},
     );
-    if (response.statusCode != 200) throw Exception(response.data["message"]);
+    if (response.statusCode != 201) throw Exception(response.data["message"]);
+    ApiConfig.setAuthorizationHeader(response.data);
     return response.data;
   }
 
@@ -19,6 +20,7 @@ class AuthService {
       data: {"username": username, "password": password},
     );
     if (response.statusCode != 200) throw Exception(response.data["message"]);
+    ApiConfig.setAuthorizationHeader(response.data);
     return response.data;
   }
 }

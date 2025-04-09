@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sistem_kelas/screens/menu/menu_page.dart';
 
 import 'package:sistem_kelas/screens/signin/signin_page.dart';
-import 'package:sistem_kelas/services/auth.dart';
+import 'package:sistem_kelas/services/auth_service.dart';
 import 'package:sistem_kelas/shared/storage.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -35,6 +36,12 @@ class _SignUpPageState extends State<SignUpPage> {
       final data = await authService.signUp(username, password);
       final storage = Storage();
       await storage.saveToken(data);
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const MenuPage()),
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(

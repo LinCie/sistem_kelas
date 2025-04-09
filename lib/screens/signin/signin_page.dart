@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sistem_kelas/screens/menu/menu_page.dart';
 import 'package:sistem_kelas/screens/signup/signup_page.dart';
-import 'package:sistem_kelas/services/auth.dart';
+import 'package:sistem_kelas/services/auth_service.dart';
 import 'package:sistem_kelas/shared/storage.dart';
 
 class SignInPage extends StatefulWidget {
@@ -21,14 +22,20 @@ class _SignInPageState extends State<SignInPage> {
     final authService = AuthService();
 
     try {
-      final data = await authService.signUp(username, password);
+      final data = await authService.signIn(username, password);
       final storage = Storage();
       await storage.saveToken(data);
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const MenuPage()),
+        );
+      }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Registration failed: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration failed: ${e.toString()}')),
+        );
       }
     }
   }
